@@ -1,0 +1,73 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlserver"
+    url      = env("DATABASE_URL") 
+}
+
+model Academy {
+    id            Int       @id @default(autoincrement())
+    createdDate   DateTime    @default(now())
+    updatedDate   DateTime    @default(now())
+    enabled       Boolean
+    name          String
+    description   String         @default("")
+    courses       Course[]
+    classroom     Classroom[]
+    teacher       Teacher[]
+    subject       Subject[]
+}
+
+model Classroom {
+    id          Int   @id @default(autoincrement())
+    createdDate DateTime  @default(now())
+    updatedDate DateTime  @default(now())
+    enabled     Boolean
+    number      Int  
+    capacity    Int?          
+    academyId   Int
+    courses     Course[] 
+    academy     Academy   @relation(fields: [academyId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+}
+
+model Course {
+    id          Int     @id  @default(autoincrement())
+    createdDate DateTime     @default(now())
+    updatedDate DateTime     @default(now())
+    enabled     Boolean
+    section     String
+    academyId   Int
+    classroomId Int
+    subjects    Subject[]
+    academy     Academy      @relation(fields: [academyId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+    classroom   Classroom    @relation(fields: [classroomId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+}
+
+model Subject {
+    id          Int       @id @default(autoincrement())
+    createdDate DateTime      @default(now())
+    updatedDate DateTime      @default(now())
+    enabled     Boolean
+    name        String
+    teacherId   Int
+    academyId   Int
+    courseId    Int
+    teacher     Teacher       @relation(fields: [teacherId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+    academy     Academy       @relation(fields: [academyId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+    course      Course        @relation(fields: [courseId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+}
+
+model Teacher {
+    id          Int         @id @default(autoincrement())
+    createdDate DateTime    @default(now())
+    updatedDate DateTime    @default(now())
+    enabled     Boolean
+    firstname   String
+    lastname    String
+    academyId   Int
+    subjects    Subject[]
+    academy     Academy      @relation(fields: [academyId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+}
+
