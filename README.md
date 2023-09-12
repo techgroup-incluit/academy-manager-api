@@ -24,7 +24,7 @@ Academy Scheduler Manager is a robust academy scheduler manager designed to stre
 3. **Run the Shell Script**: Execute the `run.sh` script to start the project:
 
    ```bash
-   ./run.sh
+   ./start.sh
    ```
 
    This script will:
@@ -33,18 +33,6 @@ Academy Scheduler Manager is a robust academy scheduler manager designed to stre
    - Initialize Dapr.
    - Run the Techgroup Dapr microservices defined in `app.yml`.
    - Open the Dapr dashboard on port 9000.
-
-### Windows
-
-1. **Clone the Repository**: Clone this repository to your local machine.
-2. **Navigate to the Project Directory**: Open a command prompt and navigate to the project directory.
-3. **Run the Batch File**: Execute the `run.bat` script to start the project:
-
-   ```bash
-   run.bat
-   ```
-
-   This script will execute the same steps as the Unix/Linux version.
 
 ## Dapr Configuration
 
