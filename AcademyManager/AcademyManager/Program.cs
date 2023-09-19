@@ -15,6 +15,9 @@ builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                     builder => builder.MigrationsAssembly(typeof(DataContext).Assembly.FullName)));
 
+builder.Services.AddCors();
+
+
 //builder.Services.AddDbContext<DataContext> (option=> option.UseSqlServer("Server=DESKTOP-30ISOBV\\SQLEXPRESS;Initial Catalog=AcademyManager;Integrated Security=true; TrustServerCertificate=True"));
 
 var app = builder.Build();
@@ -25,6 +28,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder => 
+    builder.WithOrigins("http://localhost:8080") //TODO: Make it via env vars. Hardcoded for testing purposes
+           .AllowAnyMethod()
+           .AllowAnyHeader());
+
 
 // app.UseHttpsRedirection();
 
